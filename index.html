@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片懒加载</title>
+    <style type="text/css">
+        ul{
+            overflow: hidden;
+            width: 1200px;
+            margin: 0 auto;
+        }
+        ul li{
+            float: left;
+            list-style: none;
+        }
+        ul li img{
+            width: 300px;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <ul>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/1.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/2.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/3.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/4.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/5.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/6.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/7.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/8.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/9.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/10.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/11.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/12.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/13.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/14.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/15.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/16.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/17.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/18.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/19.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/20.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/21.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/22.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/23.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/24.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/25.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/26.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/27.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/28.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/29.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/30.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/31.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/32.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/20.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/16.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/35.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/36.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/37.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/38.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/39.jpg"></li>
+            <li><img class="loadImg" src="images/loading.gif" alt="加载中" data-src="images/40.jpg"></li>
+        </ul>
+    </div>
+
+
+<script type="text/javascript">
+   
+
+
+    var ImgLazyLoad = function (ImgName) {
+        this.ImgName = ImgName;
+        this.Img = null;
+        this.ImgLen = null;
+        this.init();
+    }
+    ImgLazyLoad.prototype.init = function () {
+        this.Img = document.getElementsByClassName(this.ImgName);
+        this.ImgLen = this.Img.length;
+        this.loadImg();
+        window.onscroll = function () {
+            this.loadImg();
+        }.bind(this)
+    }
+    ImgLazyLoad.prototype.loadImg = function () {
+        var wHeight = document.documentElement.clientHeight + 100;
+        var _this = this;
+        for (var i = 0; i < this.ImgLen; i++) {
+            if (_this.Img[i].getBoundingClientRect().top < wHeight && !_this.Img[i].isLoad) {
+                _this.Img[i].isLoad = true;
+                (function(i){
+                    setTimeout(function(){
+                        if (_this.Img[i].dataset) {
+                            _this.aftLoadImg(_this.Img[i], _this.Img[i].dataset.src);
+                        } else {
+                            _this.aftLoadImg(_this.Img[i], _this.Img[i].getAttribute("data-src"));
+                        }
+                        _this.Img[i].style.cssText = "transition: 1s; opacity: 1;"
+                    }, 500)
+                })(i);
+            }
+        }
+    }
+    ImgLazyLoad.prototype.aftLoadImg = function (obj, url) {
+        var oImg = new Image();
+        oImg.onload = function () {
+            obj.src = oImg.src;
+        }
+        oImg.src = url;
+    }
+
+
+    new ImgLazyLoad('loadImg');
+
+
+
+
+
+
+</script>
+</body>
+</html>
